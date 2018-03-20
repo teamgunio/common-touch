@@ -12,20 +12,20 @@ This projects draws heavily on [Scripts to Rule Them All](https://githubengineer
 
 Add to a new or existing project with:
 ```
-git subtree add --prefix cli git@github.com:teamgunio/common-touch master --squash
+git subtree add --prefix [path] git@github.com:teamgunio/common-touch master --squash
 ```
 
 ### Commands
 
- * `./cli/bootstrap` - install, update and lock all pre-requisites, languages and dependencies.
- * `./cli/build` - primary entry for running builds.
- * `./cli/console` - opens an (non-)interactive console with the environment properly configured.
- * `./cli/dashboard` - open project related dashboards, monitoring tools and other important links.
- * `./cli/deploy` - primary entry for performing deployments.
- * `./cli/ci build` - invoked by CI to run test, build containers and capture artifacts.
- * `./cli/ci deploy` - invoked by CI to deploy target branch.
- * `./cli/setup` - setup a project for the first time.
- * `./cli/start` - start the application.
- * `./cli/test` - test the application.
- * `./cli/update` - update sources, dependencies and migrations.
+ * `./[path]/bootstrap` - install, update and lock all pre-requisites, languages and dependencies.
+ * `./[path]/build` - primary entry for running builds.
+ * `./[path]/console` - opens an (non-)interactive console with the environment properly configured.
+ * `./[path]/dashboard` - open project related dashboards, monitoring tools and other important links.
+ * `./[path]/deploy` - primary entry for performing deployments.
+ * `./[path]/ci build` - invoked by CI to run test, build containers and capture artifacts.
+ * `./[path]/ci deploy` - invoked by CI to deploy target branch.
+ * `./[path]/setup` - setup a project for the first time.
+ * `./[path]/start` - start the application.
+ * `./[path]/test` - test the application.
+ * `./[path]/update` - update sources, dependencies and migrations.
  
