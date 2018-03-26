@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# ropegun/update: Update application to run for its current checkout.
+
+set -x
+
+cd "$(dirname "$0")/.."
+
+# run all database migrations to ensure everything is up to date.
+
+function update_mysql {
+  echo "==> Updating mysql…"
+
+  TMP_DIR="/tmp/PROJECT_ID"
+  SQL="$(date +%Y-%m-%d)-backup.sql"
+  BACKUP=$SQL.gz
+
+  if [ ! -d $TMP_DIR ]; then
+    mkdir $TMP_DIR
+  fi
+
+  if [ ! -f $TMP_DIR/$BACKUP ]; then
+      echo "==> Downloading a new mysql_dump"
+      aws s3 cp s3://backups.PROJET_NAME/$BACKUP $TMP_DIR/
+  else
+    echo "==> $BACKUP is already downloaded"
+  fi
+
+  echo "==> Extracting & Importing Database. \nThis will take several minutes. Maybe go get a coffee."
+  gunzip -q -k $TMP_DIR/$BACKUP
+  if [ $HOST == "staging.PROJECT_ID" ]; then
+	  mysql -uroot -pchangeme -h 0.0.0.0 PROJECT_ID < $TMP_DIR/$SQL
+  fi
+
+}
+
+function update_pg {
+  # Source Prod
+
+  echo "==> Fetching postgres data from production…"
+  pg_dump -h PROJET_NAME -U postgres PROJECT_ID > /tmp/PROJECT_ID/postgres.sql
+
+  echo "==> Importing postgres data…"
+  psql -h 0.0.0.0 -U postgres -d PROJECT_ID < /tmp/PROJECT_ID/postgres.sql
+
+}
+
+# Commands
+
+if [ -n "$1" ]; then
+  # use first argument as flag to only update postgres or mysql
+  if [ "$1" = "pg" ]; then
+    update_pg
+  elif [ "$1" = "mysql" ]; then
+    update_mysql
+  fi
+else
+  update_mysql
+  update_pg
+fi
+
+case $OSTYPE in
+darwin*)
+  say "Update Complete"
+;;
+*)
+  echo "==>Update Complete"
+esac
