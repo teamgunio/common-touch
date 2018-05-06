@@ -7,6 +7,6 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-script/bootstrap
-script/start build
-script/update
+ropegun/bootstrap
+ropegun/start build
+ropegun/update

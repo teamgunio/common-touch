@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# ropegun/nuke: Delete development environment and other local env set-up.
+
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+echo "==> Stopping containers..."
+docker-compose -f docker-compose.yml down
+echo "==> Destroying containers"
+docker-compose -f docker-compose.yml rm --force
+echo "==> Removing volumes"
+docker-compose -f docker-compose.yml down --volumes
+echo "==> Removing images"
+docker-compose -f docker-compose.yml down --rmi all

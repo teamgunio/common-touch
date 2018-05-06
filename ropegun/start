@@ -4,7 +4,7 @@
 
 set -x
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit
 
 if [ ! -f .env ]; then
   echo "ERROR: Add your AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID to .env file in the root of the repository."
