@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# ropegun/start: Launch the application and any extra required processes locally.
+
+set -x
+
+cd "$(dirname "$0")/.." || exit
+
+if [ ! -f .env ]; then
+  echo "ERROR: Add your AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID to .env file in the root of the repository."
+  return 1
+else
+  . .env
+fi
+
+if ! docker ps &> /dev/null; then
+  echo "==> Starting Docker"
+  open -a Docker
+  echo "==> Waiting 30 seconds for Docker to start running..."
+  sleep 30
+fi
+
+if [ "$1" = "build" ]; then
+  docker-compose -f docker-compose.yml up --build -d
+elif ! docker ps | grep -q PROJECT_ID_CENTRAL_NODE; then
+  docker-compose -f docker-compose.yml up -d
+else
+  echo "==> Containers are already running. Skipping"
+fi
+
+sleep 3
+open http://localhost/

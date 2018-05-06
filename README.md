@@ -12,20 +12,19 @@ This projects draws heavily on [Scripts to Rule Them All](https://githubengineer
 
 Add to a new or existing project with:
 ```
-git subtree add --prefix cli git@github.com:teamgunio/common-touch master --squash
+git subtree add --prefix ropegun git@github.com:teamgunio/ropegun master --squash
 ```
 
 ### Commands
 
- * `./cli/bootstrap` - install, update and lock all pre-requisites, languages and dependencies.
- * `./cli/build` - primary entry for running builds.
- * `./cli/console` - opens an (non-)interactive console with the environment properly configured.
- * `./cli/dashboard` - open project related dashboards, monitoring tools and other important links.
- * `./cli/deploy` - primary entry for performing deployments.
- * `./cli/ci build` - invoked by CI to run test, build containers and capture artifacts.
- * `./cli/ci deploy` - invoked by CI to deploy target branch.
- * `./cli/setup` - setup a project for the first time.
- * `./cli/start` - start the application.
- * `./cli/test` - test the application.
- * `./cli/update` - update sources, dependencies and migrations.
- 
+ * `./ropegun/bootstrap` - install, update and lock all pre-requisites, languages and dependencies.
+ * `./ropegun/build` - primary entry for running builds.
+ * `./ropegun/console` - opens an (non-)interactive console with the environment properly configured.
+ * `./ropegun/dashboard` - open project related dashboards, monitoring tools and other important links.
+ * `./ropegun/deploy` - primary entry for performing deployments.
+ * `./ropegun/ci build` - invoked by CI to run test, build containers and capture artifacts.
+ * `./ropegun/ci deploy` - invoked by CI to deploy target branch.
+ * `./ropegun/setup` - setup a project for the first time.
+ * `./ropegun/start` - start the application.
+ * `./ropegun/test` - test the application.
+ * `./ropegun/update` - update sources, dependencies and migrations.

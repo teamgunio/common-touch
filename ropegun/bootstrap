@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# ropegun/bootstrap: Resolve all dependencies that the application requires to run.
+
+set -e
+
+echo "==> Resolving dependenies"
+
+# We may want to resolve dependencies differently if we are on MacOS or Linux or Windows...
+case $OSTYPE in
+darwin*)
+
+  command -v brew >/dev/null 2>&1 || ( echo >&2 "==> Homebrew is required. \nSee https://brew.sh/" && exit 1 )
+
+  brew tap caskroom/cask
+
+  command -v docker >/dev/null 2>&1 || ( echo >&2 "==> Docker is required. \nInstalling via brew cask." && brew cask install docker )
+
+  brew tap homebrew/bundle
+  brew bundle
+
+;;
+*)
+  echo "I don't know how to resolve dependencies for $OSTYPE. \nPlease add a block to ropegun/bootstrap."
+esac

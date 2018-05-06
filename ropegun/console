@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# ropegun/console: Launch a console for the application. Optionally allow an
+#                 environment to be passed in to let the script handle the
+#                 specific requirements for connecting to a console for that
+#                 environment.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+if [ -n "$1" ]; then
+  # use first argument as an environment name. Use this to decide how to connect
+  # to the appropriate console.
+  . .env
+  if [ "$1" = "pg" ]; then
+    echo "==> Connecting to local Postgres."
+    . PG_PASSWORD
+    pgcli -h 0.0.0.0 -U postgres -d PROJECT_ID
+  elif [ "$1" = "pg-stage" ]; then
+    pgcli -h 0.0.0.0 -U postgres -d PROJECT_ID
+    echo "==> Connecting to Staging Postgres."
+  elif [ "$1" = "pg-prod" ]; then
+    pgcli -h 0.0.0.0 -U postgres -d PROJECT_ID
+    echo "==> Connecting to PRODUCTION Postgres."
+  else
+    echo "Sorry, I don't know how to connect to the '$1' environment."
+    exit 1
+  fi
+else
+  # no argument provided, so just run the local console in the development
+  # environment.
+  docker exec -it PROJECT_ID_CENTRAL_NODE bash
+fi
